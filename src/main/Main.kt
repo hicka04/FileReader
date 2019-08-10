@@ -1,5 +1,8 @@
 package main
 
+import main.user.UserCsvReader
+
 fun main(args : Array<String>) {
-    println("Hello Kotlin!!")
+    val users = UserCsvReader().readObject()
+    print(users)
 }
