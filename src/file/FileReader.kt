@@ -1,5 +1,6 @@
 package file
 
+import decode.Decoder
 import java.io.File
 
 interface FileReader<Object> {

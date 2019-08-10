@@ -1,3 +1,3 @@
-package file
+package decode
 
 interface Decodable
