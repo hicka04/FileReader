@@ -1,8 +1,11 @@
 package main
 
-import main.user.UserCsvReader
+import file.csv.CsvReader
+import main.user.UserCsvDecoder
 
 fun main(args : Array<String>) {
-    val users = UserCsvReader().readObject()
+    val users = CsvReader(filePath = "aaa",
+                          fileName = "bbb",
+                          decoder = UserCsvDecoder()).readObject()
     print(users)
 }
