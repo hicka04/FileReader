@@ -2,15 +2,15 @@ package decode.csv
 
 import decode.Decoder
 
-enum class Quote(val char: Char) {
-    SINGLE_QUOTE('\''),
-    DOUBLE_QUOTE('"')
-}
-
 abstract class CsvDecoder<Item: CsvDecodable>(private val delimiter: String = ",",
                                               private val lineDelimiter: String = "\n",
                                               private val quote: Quote? = Quote.DOUBLE_QUOTE,
                                               private val numberOfHeaderLines: Int = 0): Decoder<List<Item>> {
+
+    enum class Quote(val char: Char) {
+        SINGLE_QUOTE('\''),
+        DOUBLE_QUOTE('"')
+    }
 
     override fun decode(string: String): List<Item> {
         return string.split("${quote?.char ?: ""}$lineDelimiter${quote?.char ?: ""}")

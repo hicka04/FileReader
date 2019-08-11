@@ -9,12 +9,7 @@ class CsvReader<Item: CsvDecodable>(override val filePath: String,
                                     override val decoder: CsvDecoder<Item>): FileReader<List<Item>> {
 
     override fun readObject(): List<Item> {
-//        val fileText = readFile().readText()
-        // test data
-        return decoder.decode("""
-            "1","hog,e1
-            hoge"
-            "2","ho"ge2"
-        """.trimIndent())
+        val fileText = readFile().readText()
+        return decoder.decode(fileText)
     }
 }
