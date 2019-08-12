@@ -1,6 +1,8 @@
 package decode.csv
 
 import decode.Decoder
+import util.Result
+import java.lang.Exception
 
 abstract class CsvDecoder<Item: CsvDecodable>(private val delimiter: String = ",",
                                               private val lineDelimiter: String = "\n",
@@ -12,11 +14,15 @@ abstract class CsvDecoder<Item: CsvDecodable>(private val delimiter: String = ",
         DOUBLE_QUOTE('"')
     }
 
-    override fun decode(string: String): List<Item> {
-        return string.split("${quote?.char ?: ""}$lineDelimiter${quote?.char ?: ""}")
+    override fun decode(string: String): Result<List<Item>, Exception> {
+        val items = string.split("${quote?.char ?: ""}$lineDelimiter${quote?.char ?: ""}")
                 .drop(numberOfHeaderLines)
                 .map { columns(it) }
                 .mapNotNull { decodeItem(it) }
+        return when(items.isNotEmpty()) {
+            true -> Result.Success(items)
+            false -> Result.Failure(Exception())
+        }
     }
 
     private fun columns(line: String): List<String> {

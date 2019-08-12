@@ -18,7 +18,7 @@ interface FileReader<Object> {
     fun readObject(): Result<Object, Exception> {
         return try {
             val fileText = readFile().readText()
-            Result.Success(decoder.decode(fileText))
+            decoder.decode(fileText)
         } catch (e: Exception) {
             Result.Failure(e)
         }
