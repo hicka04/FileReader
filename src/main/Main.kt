@@ -4,8 +4,10 @@ import file.csv.CsvReader
 import main.user.UserCsvDecoder
 
 fun main(args : Array<String>) {
-    val users = CsvReader(filePath = "res/csv",
-                          fileName = "users.csv",
-                          decoder = UserCsvDecoder()).readObject()
-    print(users)
+    val result = CsvReader(filePath = "res/csv",
+                           fileName = "users.csv",
+                           decoder = UserCsvDecoder()).readObject()
+    result
+        .onSuccess { users -> print(users) }
+        .onFailure { error -> error.printStackTrace() }
 }
