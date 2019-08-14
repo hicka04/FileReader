@@ -6,15 +6,22 @@ sealed class Result<T, Exception: java.lang.Exception> {
 
     fun onSuccess(onSuccess: (T) -> Unit): Result<T, Exception> {
         when(this) {
-            is Success -> onSuccess(this.value)
+            is Success -> onSuccess(value)
         }
         return this
     }
 
     fun onFailure(onFailure: (Exception) -> Unit): Result<T, Exception> {
         when(this) {
-            is Failure -> onFailure(this.error)
+            is Failure -> onFailure(error)
         }
         return this
+    }
+
+    fun getOrNull(): T? {
+        return when(this) {
+            is Success -> value
+            else -> null
+        }
     }
 }

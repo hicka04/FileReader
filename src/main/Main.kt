@@ -8,6 +8,7 @@ fun main(args : Array<String>) {
                            fileName = "users.csv",
                            decoder = UserCsvDecoder()).readObject()
     result
-        .onSuccess { users -> print(users) }
+        .onSuccess { users -> println(users) }
         .onFailure { error -> error.printStackTrace() }
+    println(result.getOrNull())
 }
