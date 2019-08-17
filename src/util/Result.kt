@@ -1,17 +1,17 @@
 package util
 
-sealed class Result<T, Exception: java.lang.Exception> {
-    data class Success<T, Exception: java.lang.Exception>(val value: T): Result<T, Exception>()
-    data class Failure<T, Exception: java.lang.Exception>(val error: Exception): Result<T, Exception>()
+sealed class Result<out T, out Error: Throwable> {
+    data class Success<T>(val value: T): Result<T, Nothing>()
+    data class Failure<Error: Throwable>(val error: Error): Result<Nothing, Error>()
 
-    fun onSuccess(onSuccess: (T) -> Unit): Result<T, Exception> {
+    fun onSuccess(onSuccess: (T) -> Unit): Result<T, Error> {
         when(this) {
             is Success -> onSuccess(value)
         }
         return this
     }
 
-    fun onFailure(onFailure: (Exception) -> Unit): Result<T, Exception> {
+    fun onFailure(onFailure: (Error) -> Unit): Result<T, Error> {
         when(this) {
             is Failure -> onFailure(error)
         }
@@ -22,6 +22,13 @@ sealed class Result<T, Exception: java.lang.Exception> {
         return when(this) {
             is Success -> value
             else -> null
+        }
+    }
+
+    fun <R: Throwable> mapError(transform: (Error) -> R): Result<T, R> {
+        return when(this) {
+            is Success -> Success(this.value)
+            is Failure -> Failure(transform(this.error))
         }
     }
 }

@@ -1,8 +1,10 @@
 package decode
 
 import util.Result
-import java.lang.Exception
 
-interface Decoder<Object> {
-    fun decode(string: String): Result<Object, Exception>
+interface Decoder<out Object, out Error: Decoder.DecoderError> {
+
+    fun decode(string: String): Result<Object, Error>
+
+    abstract class DecoderError: Error()
 }

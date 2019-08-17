@@ -9,6 +9,6 @@ fun main(args : Array<String>) {
                            decoder = UserCsvDecoder()).readObject()
     result
         .onSuccess { users -> println(users) }
-        .onFailure { error -> error.printStackTrace() }
+        .onFailure { error -> println(error) }
     println(result.getOrNull())
 }
