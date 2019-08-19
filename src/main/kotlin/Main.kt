@@ -1,10 +1,8 @@
-package main
-
 import file.csv.CsvReader
 import main.user.UserCsvDecoder
 
 fun main(args : Array<String>) {
-    val result = CsvReader(filePath = "res/csv",
+    val result = CsvReader(filePath = "src/main/resources/csv",
                            fileName = "users.csv",
                            decoder = UserCsvDecoder()).readObject()
     result
