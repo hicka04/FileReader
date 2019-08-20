@@ -1,7 +1,6 @@
-package main.user
+package user
 
 import decode.csv.CsvDecoder
-import java.lang.Exception
 
 class UserCsvDecoder: CsvDecoder<User>() {
 
